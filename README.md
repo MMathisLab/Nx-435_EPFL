@@ -16,3 +16,11 @@ This is a LaTeX template for the assignment you can use. You can git clone or do
 - `figures directory`
 - `proposal.tex`
 - `references.bib`
+
+**Pong EMG -- build your own BCI**
+Please look at the `README.md` for how to use this code!
+
+- `spike_stream_threshold.ipynb`
+- `pong.py`
+- `spikerbox_serial.py`
+- `stream.py`
