@@ -10,6 +10,7 @@ This repo accompanies NX-435 (Spring 2024, Spring 2025). In the directory `Noteb
 - `Demo_GLM.ipynb` accompanies Lecture 5 where we introduce neural data analysis, esp. Poission GLMs
 - `Demo_GLMsolutions.ipynb` is the exercise solution set.
 - `CEBRA__NX435_demo.ipynb` accompanies Lecture 5 where we introduce neural data analysis, here population anaylysis with latent variable models
+- This is another CEBRA demo that helps you get started on your own data too: https://cebra.ai/docs/demo_notebooks/CEBRA_best_practices.html
 
 **Research_proposal_template**
 
