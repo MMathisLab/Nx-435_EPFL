@@ -9,15 +9,6 @@ from ctypes import c_double
 from flappy import Flappy
 
 
-### SET SOME VARIABLES ###
-cport = "COM3"  # set the correct port before you run it
-inputBufferSize = 2000  # keep between 2000-20000
-movementThreshold = 20  # start with 1 std above running mean
-playerPaddle = 200  # refers to paddle size, default is 100
-cpuPlayStyle = "following"  # options are 'following' or 'random'
-###from spikerbox_serial import read_arduino, process_data, init_serial
-
-
 def emg_process_loop(shared_mean, cport, inputBufferSize):
     from spikerbox_serial import read_arduino, process_data, init_serial
     import numpy as np
