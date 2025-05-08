@@ -143,7 +143,8 @@ class Pong:
     def handle_input(self, emg_val, threshold):
         self.p1_handle_event(emg_val, threshold)
 
-    # could alter this to expand gameplay options
+    ### Alter this block if you want to expand gameplay options ###
+    ###############################################################
     def p1_handle_event(self, running_mean_tmp, movementThreshold):
         global p1_move_up, p1_move_down
 
@@ -153,6 +154,8 @@ class Pong:
         else:
             self.p1_move_down = True
             self.p1_move_up = False
+
+    ###############################################################
 
     def p1_update(self):
         # do nothing
