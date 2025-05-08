@@ -9,24 +9,27 @@ from ctypes import c_double
 from flappy import Flappy
 
 
-def emg_process_loop(shared_mean, cport, inputBufferSize):
+def emg_process_loop(
+    shared_value, cport, inputBufferSize, compute_fn, compute_kwargs=None
+):
     from spikerbox_serial import read_arduino, process_data, init_serial
     import numpy as np
+
+    compute_kwargs = compute_kwargs or {}
 
     ser = init_serial(cport)
     while True:
         data = read_arduino(ser, inputBufferSize)
         processed = process_data(data)
         if len(processed) > 0:
-            signal = np.abs(
-                np.array(processed) - 500
-            )  # this offset may need to be changed
-            mean_val = np.mean(signal)
-            shared_mean.value = mean_val
+            signal = np.abs(np.array(processed) - 500)
+            result = compute_fn(signal, **compute_kwargs)
+            shared_value.value = float(np.mean(result))  # ensure single float
 
 
 # Running mean volage is just one of several ways you could use the data from this stream.
-# Discuss some other ways you might want to parse the datastream, and
+# Discuss some other ways you might want to parse the datastream, and try replacing this
+# function with your own in emg_process_loop above (remember to update the args when it is called in main as well)
 def running_mean(data, window_size):
     """Compute the running mean over a given window size."""
     cumsum = np.cumsum(np.insert(data, 0, 0))
@@ -62,7 +65,11 @@ def main():
 
     if use_emg:
         emg_mean = Value(c_double, 0.0)
-        proc = Process(target=emg_process_loop, args=(emg_mean, cport, inputBufferSize))
+        proc = Process(
+            target=emg_process_loop,
+            args=(emg_mean, cport, inputBufferSize, running_mean),
+            kwargs={"compute_kwargs": {"window_size": 500}},
+        )
         proc.start()
     else:
         emg_mean = None
